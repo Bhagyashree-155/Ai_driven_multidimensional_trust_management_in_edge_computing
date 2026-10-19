@@ -1,0 +1,10 @@
+FROM python:3.10-slim
+
+WORKDIR /app
+
+COPY worker.py .
+COPY confidence_engine.py .
+
+RUN pip install --no-cache-dir redis psutil requests
+
+CMD ["python", "-u", "worker.py"]

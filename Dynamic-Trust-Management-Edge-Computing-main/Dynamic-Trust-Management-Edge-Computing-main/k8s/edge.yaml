@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: edge-nodes
+
+spec:
+  replicas: 3
+
+  selector:
+    matchLabels:
+      app: edge
+
+  template:
+    metadata:
+      labels:
+        app: edge
+
+    spec:
+      containers:
+      - name: edge
+        image: trust-edge:v1
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000

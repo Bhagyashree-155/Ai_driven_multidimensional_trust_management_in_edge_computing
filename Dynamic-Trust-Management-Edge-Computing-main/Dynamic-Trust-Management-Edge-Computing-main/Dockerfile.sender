@@ -1,0 +1,8 @@
+FROM python:3.10-slim
+WORKDIR /app
+
+COPY . .
+
+RUN pip install --no-cache-dir requests psutil redis
+
+CMD ["python","-u","edge/real_metrics_sender.py"]

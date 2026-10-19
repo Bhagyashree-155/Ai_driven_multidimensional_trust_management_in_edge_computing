@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: edge-headless
+spec:
+  clusterIP: None
+  selector:
+    app: edge
+  ports:
+    - port: 5000
+      targetPort: 5000
+
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: edge
+spec:
+  serviceName: edge-headless
+  replicas: 10
+
+  selector:
+    matchLabels:
+      app: edge
+
+  template:
+    metadata:
+      labels:
+        app: edge
+
+    spec:
+      containers:
+      - name: edge
+        image: trust-edge:latest
+        imagePullPolicy: IfNotPresent
+
+        ports:
+        - containerPort: 5000
